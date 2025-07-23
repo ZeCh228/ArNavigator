@@ -909,21 +909,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rooms:
   - roomNumber: S06-0701
-    nearestWaypoint: {fileID: 466638254}
+    nearestWaypoint: {fileID: 1580923624}
   - roomNumber: S06-0702
-    nearestWaypoint: {fileID: 1199066424}
+    nearestWaypoint: {fileID: 635341563}
   - roomNumber: S06-0703-1
-    nearestWaypoint: {fileID: 1939548883}
+    nearestWaypoint: {fileID: 741514932}
   - roomNumber: S06-0703
-    nearestWaypoint: {fileID: 1004936372}
+    nearestWaypoint: {fileID: 91452656}
   - roomNumber: S06-0704
-    nearestWaypoint: {fileID: 336961452}
+    nearestWaypoint: {fileID: 829536522}
   - roomNumber: S06-0705
-    nearestWaypoint: {fileID: 81444437}
+    nearestWaypoint: {fileID: 1356274567}
   - roomNumber: S06-0706
-    nearestWaypoint: {fileID: 1654226654}
+    nearestWaypoint: {fileID: 1506944958}
   - roomNumber: S06-0707
-    nearestWaypoint: {fileID: 1654226654}
+    nearestWaypoint: {fileID: 941750380}
+  - roomNumber: S06-0708
+    nearestWaypoint: {fileID: 312751825}
+  - roomNumber: S06-0709
+    nearestWaypoint: {fileID: 271998165}
+  - roomNumber: S06-0710
+    nearestWaypoint: {fileID: 1096569597}
+  - roomNumber: S06-0711
+    nearestWaypoint: {fileID: 20003269}
+  - roomNumber: S06-0712
+    nearestWaypoint: {fileID: 835484068}
+  - roomNumber: S06-0713
+    nearestWaypoint: {fileID: 810956953}
+  - roomNumber: S06-0714
+    nearestWaypoint: {fileID: 1794338434}
+  - roomNumber: S06-0715
+    nearestWaypoint: {fileID: 1674336957}
+  - roomNumber: S06-0717
+    nearestWaypoint: {fileID: 542767178}
+  - roomNumber: S06-0718
+    nearestWaypoint: {fileID: 1136046185}
+  - roomNumber: S06-0719
+    nearestWaypoint: {fileID: 396468017}
+  - roomNumber: S06-0720
+    nearestWaypoint: {fileID: 566325105}
+  - roomNumber: S06-0721
+    nearestWaypoint: {fileID: 973261964}
+  - roomNumber: S06-0722
+    nearestWaypoint: {fileID: 1279360568}
+  - roomNumber: S06-0723
+    nearestWaypoint: {fileID: 599075891}
+  - roomNumber: S06-0724
+    nearestWaypoint: {fileID: 153455936}
+  - roomNumber: S06-0725
+    nearestWaypoint: {fileID: 636423793}
+  - roomNumber: S06-0726
+    nearestWaypoint: {fileID: 1654152201}
+  - roomNumber: S06-0727
+    nearestWaypoint: {fileID: 1749469226}
+  - roomNumber: S06-0728
+    nearestWaypoint: {fileID: 274390670}
+  - roomNumber: S06-0729
+    nearestWaypoint: {fileID: 1502784170}
+  - roomNumber: S06-0730
+    nearestWaypoint: {fileID: 1198960079}
+  - roomNumber: S06-0730-1
+    nearestWaypoint: {fileID: 2006554427}
+  - roomNumber: S06-0731
+    nearestWaypoint: {fileID: 1232615792}
+  - roomNumber: S06-0732-1
+    nearestWaypoint: {fileID: 705625713}
+  - roomNumber: S06-0732
+    nearestWaypoint: {fileID: 14343246}
+  - roomNumber: S06-0733
+    nearestWaypoint: {fileID: 1359115690}
+  - roomNumber: S06-0735
+    nearestWaypoint: {fileID: 1491493309}
+  - roomNumber: S06-0736
+    nearestWaypoint: {fileID: 1612274935}
 --- !u!4 &318627518
 Transform:
   m_ObjectHideFlags: 0
