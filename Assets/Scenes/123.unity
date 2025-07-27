@@ -6278,7 +6278,6 @@ MonoBehaviour:
   neighbors:
   - {fileID: 265435631}
   - {fileID: 632975823}
-  - {fileID: 1654226654}
   - {fileID: 2138903765}
 --- !u!114 &906180793
 MonoBehaviour:
@@ -8535,7 +8534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a33b820bb9011d548bfb1525d1a16472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomDatabase: {fileID: 318627517}
+  floor6Parent: {fileID: 2116797428}
+  floor7Parent: {fileID: 2070699511}
 --- !u!1 &1308173610
 GameObject:
   m_ObjectHideFlags: 0
@@ -10892,7 +10892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1606789219
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11384,15 +11384,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91782e58d867c494daa7f9002f211b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputFrom: {fileID: 736692936}
-  fromMeToggle: {fileID: 1635293634}
   findPathButton: {fileID: 1723547763}
   floorRoomSelector: {fileID: 616005210}
   roomDatabase: {fileID: 318627517}
   pathFinder: {fileID: 1300183049}
   pathVisualizer: {fileID: 1176464838}
-  errorPanel: {fileID: 44428254}
-  errorText: {fileID: 44428256}
 --- !u!1 &1647499261
 GameObject:
   m_ObjectHideFlags: 0
@@ -12112,7 +12108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1699281722
 Transform:
   m_ObjectHideFlags: 0
@@ -13361,7 +13357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1925688565
 MeshCollider:
   m_ObjectHideFlags: 0

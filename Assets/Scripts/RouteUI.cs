@@ -1,83 +1,62 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RouteUI : MonoBehaviour
 {
-    public TMP_InputField inputFrom;
-    public Toggle fromMeToggle;
     public Button findPathButton;
     public FloorRoomSelector floorRoomSelector;
     public RoomToWaypointDatabase roomDatabase;
     public PathFinder pathFinder;
     public PathVisualizer pathVisualizer;
 
-    public GameObject errorPanel;
-    public TMP_Text errorText;
-
     private void Start()
     {
-        findPathButton.onClick.AddListener(OnFindPathClicked);
-        errorPanel.SetActive(false);
+        findPathButton.onClick.AddListener(FindPath);
     }
 
-    private void OnFindPathClicked()
+    private void FindPath()
     {
-        Waypoint start = null;
+        string selectedRoom = floorRoomSelector.GetSelectedRoom();
+        int selectedFloor = floorRoomSelector.GetSelectedFloor(); // если используешь по префиксу, этот метод должен быть
 
-        if (fromMeToggle.isOn)
-        {
-            start = pathFinder.FindNearestWaypointToCamera();
-        }
-        else
-        {
-            string from = inputFrom.text.Trim();
-            if (string.IsNullOrEmpty(from))
-            {
-                ShowError("Введите кабинет отправления");
-                return;
-            }
+        Debug.Log("Выбран кабинет: " + selectedRoom);
+        Debug.Log("Определён этаж: " + selectedFloor);
 
-            start = roomDatabase.GetWaypoint(from);
-        }
-
-        string to = floorRoomSelector.GetSelectedRoom();
-        if (string.IsNullOrEmpty(to))
+        if (string.IsNullOrEmpty(selectedRoom))
         {
-            ShowError("Выберите кабинет назначения");
+            Debug.LogWarning("Кабинет не выбран.");
             return;
         }
 
-        Waypoint end = roomDatabase.GetWaypoint(to);
+        Waypoint endWaypoint = roomDatabase.GetWaypoint(selectedRoom);
 
-        if (start == null || end == null)
+        if (endWaypoint == null)
         {
-            ShowError("Не удалось найти точки маршрута");
+            Debug.LogError("Не найден Waypoint для кабинета: " + selectedRoom);
             return;
         }
 
-        var path = pathFinder.FindPath(start, end);
-        if (path != null && path.Count > 1)
-        {
-            pathVisualizer.ShowPath(path);
-        }
-        else
-        {
-            ShowError("Путь не найден");
-        }
-    }
+        Vector3 playerPosition = Camera.main.transform.position;
+        Waypoint startWaypoint = pathFinder.GetNearestWaypoint(playerPosition, selectedFloor);
 
-    private void ShowError(string message)
-    {
-        Debug.LogWarning(message);
-        errorText.text = message;
-        errorPanel.SetActive(true);
-        CancelInvoke(nameof(HideError));
-        Invoke(nameof(HideError), 3f);
-    }
+        if (startWaypoint == null)
+        {
+            Debug.LogError("Не найден ближайший Waypoint к игроку. Позиция: " + playerPosition + ", этаж: " + selectedFloor);
+            return;
+        }
 
-    private void HideError()
-    {
-        errorPanel.SetActive(false);
+        Debug.Log("Стартовый Waypoint: " + startWaypoint.name);
+        Debug.Log("Конечный Waypoint: " + endWaypoint.name);
+
+        var path = pathFinder.FindPath(startWaypoint, endWaypoint);
+
+        if (path == null || path.Count == 0)
+        {
+            Debug.LogWarning("Путь не найден.");
+            return;
+        }
+
+        Debug.Log("Путь найден. Кол-во точек: " + path.Count);
+        pathVisualizer.ShowPath(path);
     }
 }

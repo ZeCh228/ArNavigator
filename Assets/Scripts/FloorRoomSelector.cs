@@ -12,21 +12,20 @@ public class FloorRoomSelector : MonoBehaviour
 
     private void Start()
     {
-        floor6Toggle.onValueChanged.AddListener(_ => OnToggleChanged(floor6Toggle));
-        floor7Toggle.onValueChanged.AddListener(_ => OnToggleChanged(floor7Toggle));
-
         floor6Toggle.isOn = false;
         floor7Toggle.isOn = false;
 
-        UpdateDropdown();
-    }
+        floor6Toggle.onValueChanged.AddListener(isOn =>
+        {
+            if (isOn) floor7Toggle.isOn = false;
+            UpdateDropdown();
+        });
 
-    private void OnToggleChanged(Toggle changedToggle)
-    {
-        if (changedToggle == floor6Toggle && floor6Toggle.isOn)
-            floor7Toggle.isOn = false;
-        else if (changedToggle == floor7Toggle && floor7Toggle.isOn)
-            floor6Toggle.isOn = false;
+        floor7Toggle.onValueChanged.AddListener(isOn =>
+        {
+            if (isOn) floor6Toggle.isOn = false;
+            UpdateDropdown();
+        });
 
         UpdateDropdown();
     }
@@ -50,7 +49,12 @@ public class FloorRoomSelector : MonoBehaviour
         dropdown.AddOptions(filteredRooms);
     }
 
+    public int GetSelectedFloor()
+    {
+        if (floor6Toggle.isOn) return 6;
+        if (floor7Toggle.isOn) return 7;
+        return -1;
+    }
 
-    public string GetSelectedRoom() =>
-        dropdown.options.Count > 0 ? dropdown.options[dropdown.value].text : null;
+    public string GetSelectedRoom() => dropdown.options.Count > 0 ? dropdown.options[dropdown.value].text : null;
 }

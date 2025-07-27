@@ -1,12 +1,19 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
-    public RoomToWaypointDatabase roomDatabase;
+    public Transform floor6Parent;
+    public Transform floor7Parent;
 
     public List<Waypoint> FindPath(Waypoint start, Waypoint end)
     {
+        if (start == null || end == null)
+        {
+            Debug.LogWarning("Start или End Waypoint пустой. Прерываем поиск.");
+            return null;
+        }
+
         Queue<Waypoint> queue = new();
         Dictionary<Waypoint, Waypoint> cameFrom = new();
 
@@ -22,6 +29,9 @@ public class PathFinder : MonoBehaviour
 
             foreach (var neighbor in current.neighbors)
             {
+                if (neighbor == null)
+                    continue;
+
                 if (!cameFrom.ContainsKey(neighbor))
                 {
                     queue.Enqueue(neighbor);
@@ -32,6 +42,7 @@ public class PathFinder : MonoBehaviour
 
         List<Waypoint> path = new();
         var temp = end;
+
         while (temp != null)
         {
             path.Insert(0, temp);
@@ -41,12 +52,14 @@ public class PathFinder : MonoBehaviour
         return path;
     }
 
-    public Waypoint GetNearestWaypoint(Vector3 position)
+    public Waypoint GetNearestWaypoint(Vector3 position, int floor)
     {
+        Transform targetParent = floor == 6 ? floor6Parent : floor7Parent;
+
         Waypoint nearest = null;
         float minDist = Mathf.Infinity;
 
-        foreach (var wp in FindObjectsOfType<Waypoint>())
+        foreach (var wp in targetParent.GetComponentsInChildren<Waypoint>())
         {
             float dist = Vector3.Distance(position, wp.transform.position);
             if (dist < minDist)
@@ -57,16 +70,5 @@ public class PathFinder : MonoBehaviour
         }
 
         return nearest;
-    }
-
-    public Waypoint FindNearestWaypointToCamera()
-    {
-        Camera cam = Camera.main;
-        return cam ? GetNearestWaypoint(cam.transform.position) : null;
-    }
-
-    public Waypoint GetWaypointByRoom(string roomNumber)
-    {
-        return roomDatabase.GetWaypoint(roomNumber);
     }
 }
