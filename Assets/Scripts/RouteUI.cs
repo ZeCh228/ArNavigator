@@ -1,83 +1,58 @@
+п»їusing TMPro;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 
 public class RouteUI : MonoBehaviour
 {
-    [Header("UI Elements")]
     public TMP_InputField inputFrom;
-    public TMP_InputField inputTo;
-    public Toggle fromCameraToggle;
-    public Transform arCameraTransform;
-    public TMP_Text errorText;
-
-    [Header("Logic References")]
+    public Toggle fromMeToggle;
+    public Button findPathButton;
+    public FloorRoomSelector floorRoomSelector;
     public RoomToWaypointDatabase roomDatabase;
     public PathFinder pathFinder;
     public PathVisualizer pathVisualizer;
 
-    private CanvasGroup inputFromGroup;
+    public GameObject errorPanel;
+    public TMP_Text errorText;
 
-    void Start()
+    private void Start()
     {
-        fromCameraToggle.isOn = false; 
-
-        inputFromGroup = inputFrom.GetComponent<CanvasGroup>();
-        if (inputFromGroup == null)
-        {
-            inputFromGroup = inputFrom.gameObject.AddComponent<CanvasGroup>();
-        }
-
-        ApplyFromToggleVisual(); 
-        fromCameraToggle.onValueChanged.AddListener(OnToggleChanged);
+        findPathButton.onClick.AddListener(OnFindPathClicked);
+        errorPanel.SetActive(false);
     }
 
-    void OnToggleChanged(bool isOn)
+    private void OnFindPathClicked()
     {
-        ApplyFromToggleVisual();
-    }
-
-    void ApplyFromToggleVisual()
-    {
-        bool isOn = fromCameraToggle.isOn;
-
-        inputFrom.interactable = !isOn;
-        inputFromGroup.alpha = isOn ? 0.2f : 1f;
-    }
-
-    public void OnFindPathClicked()
-    {
-        string to = inputTo.text.Trim();
         Waypoint start = null;
-        Waypoint end = null;
 
-        if (fromCameraToggle.isOn)
+        if (fromMeToggle.isOn)
         {
-            start = pathFinder.GetNearestWaypoint(arCameraTransform.position);
+            start = pathFinder.FindNearestWaypointToCamera();
         }
         else
         {
             string from = inputFrom.text.Trim();
             if (string.IsNullOrEmpty(from))
             {
-                ShowError("Введите кабинет отправления или включите галочку");
+                ShowError("Р’РІРµРґРёС‚Рµ РєР°Р±РёРЅРµС‚ РѕС‚РїСЂР°РІР»РµРЅРёСЏ");
                 return;
             }
 
             start = roomDatabase.GetWaypoint(from);
         }
 
+        string to = floorRoomSelector.GetSelectedRoom();
         if (string.IsNullOrEmpty(to))
         {
-            ShowError("Введите кабинет назначения");
+            ShowError("Р’С‹Р±РµСЂРёС‚Рµ РєР°Р±РёРЅРµС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ");
             return;
         }
 
-        end = roomDatabase.GetWaypoint(to);
+        Waypoint end = roomDatabase.GetWaypoint(to);
 
         if (start == null || end == null)
         {
-            ShowError("Не удалось найти указанные кабинеты");
+            ShowError("РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°Р№С‚Рё С‚РѕС‡РєРё РјР°СЂС€СЂСѓС‚Р°");
             return;
         }
 
@@ -88,23 +63,21 @@ public class RouteUI : MonoBehaviour
         }
         else
         {
-            ShowError("Путь не найден");
+            ShowError("РџСѓС‚СЊ РЅРµ РЅР°Р№РґРµРЅ");
         }
     }
 
-    void ShowError(string message)
+    private void ShowError(string message)
     {
         Debug.LogWarning(message);
         errorText.text = message;
-        errorText.color = Color.red;
-        errorText.fontStyle = FontStyles.Bold;
-        errorText.gameObject.SetActive(true);
+        errorPanel.SetActive(true);
         CancelInvoke(nameof(HideError));
         Invoke(nameof(HideError), 3f);
     }
 
-    void HideError()
+    private void HideError()
     {
-        errorText.gameObject.SetActive(false);
+        errorPanel.SetActive(false);
     }
 }

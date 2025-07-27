@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
+    public RoomToWaypointDatabase roomDatabase;
+
     public List<Waypoint> FindPath(Waypoint start, Waypoint end)
     {
         Queue<Waypoint> queue = new();
@@ -55,5 +57,16 @@ public class PathFinder : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    public Waypoint FindNearestWaypointToCamera()
+    {
+        Camera cam = Camera.main;
+        return cam ? GetNearestWaypoint(cam.transform.position) : null;
+    }
+
+    public Waypoint GetWaypointByRoom(string roomNumber)
+    {
+        return roomDatabase.GetWaypoint(roomNumber);
     }
 }
