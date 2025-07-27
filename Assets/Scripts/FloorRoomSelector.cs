@@ -37,16 +37,19 @@ public class FloorRoomSelector : MonoBehaviour
 
         foreach (var entry in roomDatabase.rooms)
         {
-            if ((floor6Toggle.isOn && entry.floor == Floor.Floor6) ||
-                (floor7Toggle.isOn && entry.floor == Floor.Floor7))
+            string roomNumber = entry.roomNumber;
+
+            if ((floor6Toggle.isOn && roomNumber.StartsWith("06")) ||
+                (floor7Toggle.isOn && roomNumber.StartsWith("07")))
             {
-                filteredRooms.Add(entry.roomNumber);
+                filteredRooms.Add(roomNumber);
             }
         }
 
         dropdown.ClearOptions();
         dropdown.AddOptions(filteredRooms);
     }
+
 
     public string GetSelectedRoom() =>
         dropdown.options.Count > 0 ? dropdown.options[dropdown.value].text : null;
